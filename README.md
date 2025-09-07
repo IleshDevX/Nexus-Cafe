@@ -80,13 +80,13 @@ nexus-cafe/
 ## 📸 Screenshots
 
 ### Desktop View - Hero Section
-![Hero Section](screenshots/hero-desktop.png) <!-- Add your screenshot -->
+![Hero Section](screenshots/hero-desktop-01.png) <!-- Add your screenshot -->
 
 ### Interactive Menu System
-![Menu Section](screenshots/menu-desktop.png) <!-- Add your screenshot -->
+![Menu Section](screenshots/menu-desktop-02.png) <!-- Add your screenshot -->
 
 ### Mobile Responsive Design
-![Mobile View](screenshots/mobile-view.png) <!-- Add your screenshot -->
+![Mobile View](screenshots/mobile-view-03.png) <!-- Add your screenshot -->
 
 ## 🎨 Design Features
 
