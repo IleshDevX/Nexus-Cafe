@@ -2,10 +2,6 @@
 
 A modern, animated, single-page website for a conceptual premium coffee shop named "Nexus Café". This front-end showcase project demonstrates advanced CSS techniques, responsive design, and JavaScript-based animations to create an immersive digital experience that blends cutting-edge technology with artisanal coffee culture.
 
-## 🚀 Live Demo
-
-[View Live Demo](https://your-demo-link-here.com) <!-- Replace with your actual demo link -->
-
 ## ✨ Key Features
 
 ### 🎨 Futuristic UI/UX
@@ -158,3 +154,4 @@ While this is primarily a showcase project, contributions are welcome:
 ---
 
 **Note**: This is a conceptual project created for demonstration purposes. Nexus Café is not a real establishment.
+
