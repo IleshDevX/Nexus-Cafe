@@ -126,11 +126,6 @@ While this is primarily a showcase project, contributions are welcome:
 
 ## Author
 
-<div align="center">
-  <a href="https://github.com/IleshDevX">
-    <img src="https://github.com/IleshDevX.png" alt="IleshDevX" width="100" height="100" style="border-radius: 50%;">
-  </a>
-  
   **IleshDevX**
 </div>
 
