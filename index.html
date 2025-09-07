@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus Café - Premium Coffee Experience</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .gradient-text {
+            background: linear-gradient(45deg, #7C3AED, #2563EB, #06B6D4, #EC4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 200% 200%;
+            animation: gradientShift 4s ease-in-out infinite;
+        }
+        
+        .gradient-border {
+            background: linear-gradient(45deg, #7C3AED, #2563EB, #06B6D4, #EC4899);
+            padding: 2px;
+            border-radius: 0.75rem;
+            background-size: 200% 200%;
+            animation: gradientShift 4s ease-in-out infinite;
+        }
+        
+        .glass-morphism {
+            background: rgba(17, 24, 39, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .spotlight {
+            background: radial-gradient(circle at center, rgba(124, 58, 237, 0.15) 0%, rgba(37, 99, 235, 0.1) 40%, transparent 70%);
+        }
+        
+        .spotlight-hero {
+            background: 
+                radial-gradient(ellipse at 20% 50%, rgba(124, 58, 237, 0.3) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 50%, rgba(37, 99, 235, 0.3) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 20%, rgba(6, 182, 212, 0.2) 0%, transparent 50%);
+        }
+        
+        .menu-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .menu-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(124, 58, 237, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .menu-card:hover::before {
+            left: 100%;
+        }
+        
+        .menu-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 
+                0 20px 40px rgba(124, 58, 237, 0.2),
+                0 0 0 1px rgba(124, 58, 237, 0.1);
+        }
+        
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        .loader {
+            background: linear-gradient(45deg, #7C3AED, #2563EB, #06B6D4, #EC4899);
+            background-size: 400% 400%;
+            animation: gradientShift 2s ease-in-out infinite;
+        }
+        
+        .feature-card:hover .feature-icon {
+            transform: rotateY(180deg);
+        }
+        
+        .feature-icon {
+            transition: transform 0.5s ease;
+        }
+        
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(124, 58, 237, 0.5), rgba(37, 99, 235, 0.5), rgba(6, 182, 212, 0.5), transparent);
+        }
+    </style>
+</head>
+<body class="bg-black text-white overflow-x-hidden">
+
+    <!-- Loader -->
+    <div id="loader" class="fixed inset-0 z-50 flex items-center justify-center bg-black">
+        <div class="loader w-20 h-20 rounded-full animate-spin border-4 border-transparent"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="fixed top-0 w-full z-40 glass-morphism border-b border-gray-800/50">
+        <nav class="container mx-auto px-6 py-4 flex items-center justify-between relative z-10">
+            <div class="logo flex items-center space-x-3">
+                <div class="w-10 h-10 bg-gradient-to-br from-purple-500 to-blue-500 rounded-xl flex items-center justify-center">
+                    <i class="fas fa-coffee text-white"></i>
+                </div>
+                <span class="text-2xl font-bold gradient-text">Nexus Café</span>
+            </div>
+            
+            <div class="hidden md:flex items-center space-x-8 absolute left-1/2 -translate-x-1/2">
+                <a href="#home" class="nav-link relative group">
+                    Home
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-purple-400 transition-all group-hover:w-full"></span>
+                </a>
+                <a href="#menu" class="nav-link relative group">
+                    Menu
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-400 transition-all group-hover:w-full"></span>
+                </a>
+                <a href="#about" class="nav-link relative group">
+                    About
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-cyan-400 transition-all group-hover:w-full"></span>
+                </a>
+                <a href="#specialties" class="nav-link relative group">
+                    Specialties
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-pink-400 transition-all group-hover:w-full"></span>
+                </a>
+            </div>
+            
+            <div class="flex items-center space-x-4">
+                <button id="mobile-menu-btn" class="md:hidden p-3 rounded-xl glass-morphism" aria-label="Open Menu" aria-expanded="false" aria-controls="mobile-menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </nav>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden hidden absolute top-full left-0 w-full bg-black/90 backdrop-blur-lg border-b border-gray-800/50">
+            <div class="px-6 py-4 space-y-3">
+                <a href="#home" class="block py-2 nav-link">Home</a>
+                <a href="#menu" class="block py-2 nav-link">Menu</a>
+                <a href="#about" class="block py-2 nav-link">About</a>
+                <a href="#specialties" class="block py-2 nav-link">Specialties</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative min-h-[90vh] md:min-h-screen flex items-center justify-center spotlight-hero overflow-hidden">
+        <div class="container mx-auto px-6 text-center relative z-10">
+            <div class="hero-content">
+                <div class="mb-8">
+                    <span class="inline-block px-4 py-2 glass-morphism rounded-full text-sm mb-6">
+                        ✨ Experience the Future of Coffee
+                    </span>
+                </div>
+                <h1 class="text-5xl md:text-8xl font-bold mb-8 gradient-text leading-tight pb-2">
+                    Premium Coffee<br>
+                    <span class="text-4xl md:text-7xl inline-block leading-[1.15] pb-1">Reimagined</span>
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-300 mb-12 max-w-3xl mx-auto leading-relaxed">
+                    Step into a world where artisanal coffee meets cutting-edge technology. Every cup tells a story of passion, precision, and innovation.
+                </p>
+                <div class="flex justify-center">
+                    <a href="#menu" class="gradient-border group">
+                        <div class="bg-black px-8 py-4 rounded-xl hover:bg-gray-900 transition-all flex items-center justify-center space-x-2">
+                            <span class="gradient-text font-semibold">Explore Menu</span>
+                            <i class="fas fa-arrow-right gradient-text group-hover:translate-x-1 transition-transform"></i>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Divider -->
+    <div class="section-divider"></div>
+
+    <!-- Features Section -->
+    <section class="py-20 relative">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="feature-card text-center p-8 glass-morphism rounded-2xl hover:bg-gray-800/50 transition-all group">
+                    <div class="feature-icon w-16 h-16 bg-gradient-to-br from-purple-500 to-blue-500 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-seedling text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-4 gradient-text">Sustainable Sourcing</h3>
+                    <p class="text-gray-400">Direct trade relationships with coffee farmers worldwide, ensuring ethical and sustainable practices.</p>
+                </div>
+                
+                <div class="feature-card text-center p-8 glass-morphism rounded-2xl hover:bg-gray-800/50 transition-all group">
+                    <div class="feature-icon w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-flask text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-4 gradient-text">Scientific Brewing</h3>
+                    <p class="text-gray-400">Precision temperature control and extraction methods for the perfect cup every time.</p>
+                </div>
+                
+                <div class="feature-card text-center p-8 glass-morphism rounded-2xl hover:bg-gray-800/50 transition-all group">
+                    <div class="feature-icon w-16 h-16 bg-gradient-to-br from-cyan-500 to-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-robot text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-4 gradient-text">Kitchen robot</h3>
+                    <p class="text-gray-400">A tireless robotic arm serving the perfect cup of coffee every time.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section id="menu" class="py-20 relative spotlight">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-10 md:mb-16">
+                <h2 class="text-4xl md:text-6xl font-bold mb-4 md:mb-6 gradient-text">Signature Collection</h2>
+                <p class="text-gray-400 text-base md:text-xl max-w-2xl mx-auto px-2">Each creation is a masterpiece, carefully crafted to deliver an extraordinary sensory experience</p>
+            </div>
+            
+            <!-- Category Tabs -->
+            <div class="flex justify-center mb-8 md:mb-16">
+                <div class="flex space-x-2 glass-morphism rounded-2xl p-2">
+                    <button class="category-tab active px-5 md:px-8 py-3 md:py-4 rounded-xl bg-gradient-to-r from-purple-600 to-blue-600 text-white transition-all font-semibold" data-category="coffee">
+                        <i class="fas fa-coffee mr-2"></i>Coffee
+                    </button>
+                    <button class="category-tab px-5 md:px-8 py-3 md:py-4 rounded-xl hover:bg-gray-800/50 transition-all font-semibold" data-category="tea">
+                        <i class="fas fa-leaf mr-2"></i>Tea
+                    </button>
+                    <button class="category-tab px-5 md:px-8 py-3 md:py-4 rounded-xl hover:bg-gray-800/50 transition-all font-semibold" data-category="snacks">
+                        <i class="fas fa-bread-slice mr-2"></i>Artisan Bites
+                    </button>
+                    <button class="category-tab px-5 md:px-8 py-3 md:py-4 rounded-xl hover:bg-gray-800/50 transition-all font-semibold" data-category="desserts">
+                        <i class="fas fa-cookie mr-2"></i>Sweet Creations
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Menu Grid -->
+            <div class="menu-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Coffee Items -->
+                <div class="menu-card glass-morphism rounded-2xl p-6 border border-gray-800/50" data-category="coffee">
+                    <div class="relative overflow-hidden rounded-xl mb-6">
+                        <div class="w-full h-48 bg-gradient-to-br from-amber-900 to-amber-700 flex items-center justify-center">
+                            <i class="fas fa-coffee text-6xl text-amber-300"></i>
+                        </div>
+                        <div class="absolute top-4 right-4 bg-black/70 backdrop-blur-sm rounded-full px-3 py-1 text-sm">
+                            <i class="fas fa-fire text-orange-400 mr-1"></i>Hot
+                        </div>
+                    </div>
+                    <h3 class="text-2xl font-semibold mb-3 gradient-text">Quantum Espresso</h3>
+                    <p class="text-gray-400 mb-4 text-sm leading-relaxed">Rich, bold espresso with molecular notes of dark chocolate and hints of caramelized sugar. Single origin from Colombian highlands.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-3xl font-bold gradient-text">₹350</span>
+                        <div class="flex space-x-2">
+                            <span class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-xs font-semibold">V</span>
+                            <span class="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center text-xs font-semibold">GF</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="menu-card glass-morphism rounded-2xl p-6 border border-gray-800/50" data-category="coffee">
+                    <div class="relative overflow-hidden rounded-xl mb-6">
+                        <div class="w-full h-48 bg-gradient-to-br from-blue-900 to-purple-900 flex items-center justify-center">
+                            <i class="fas fa-meteor text-6xl text-blue-300"></i>
+                        </div>
+                        <div class="absolute top-4 right-4 bg-black/70 backdrop-blur-sm rounded-full px-3 py-1 text-sm">
+                            <i class="fas fa-award text-yellow-400 mr-1"></i>Popular
+                        </div>
+                    </div>
+                    <h3 class="text-2xl font-semibold mb-3 gradient-text">Nebula Latte</h3>
+                    <p class="text-gray-400 mb-4 text-sm leading-relaxed">Velvety smooth espresso with precision-steamed oat milk, featuring our signature cosmic latte art and edible glitter.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-3xl font-bold gradient-text">₹420</span>
+                        <div class="flex space-x-2">
+                            <span class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-xs font-semibold">V</span>
+                            <span class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-xs font-semibold">D</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="menu-card glass-morphism rounded-2xl p-6 border border-gray-800/50" data-category="coffee">
+                    <div class="relative overflow-hidden rounded-xl mb-6">
+                        <div class="w-full h-48 bg-gradient-to-br from-gray-900 to-black flex items-center justify-center">
+                            <i class="fas fa-snowflake text-6xl text-cyan-300"></i>
+                        </div>
+                        <div class="absolute top-4 right-4 bg-black/70 backdrop-blur-sm rounded-full px-3 py-1 text-sm">
+                            <i class="fas fa-thermometer-half text-cyan-400 mr-1"></i>Cold
+                        </div>
+                    </div>
+                    <h3 class="text-2xl font-semibold mb-3 gradient-text">Void Cold Brew</h3>
+                    <p class="text-gray-400 mb-4 text-sm leading-relaxed">24-hour cold extraction process with nitrogen infusion, creating a smooth, creamy texture with vanilla undertones.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-3xl font-bold gradient-text">₹390</span>
+                        <div class="flex space-x-2">
+                            <span class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-xs font-semibold">V</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-card glass-morphism rounded-2xl p-6 border border-gray-800/50" data-category="coffee">
+                    <div class="relative overflow-hidden rounded-xl mb-6">
+                        <div class="w-full h-48 bg-gradient-to-br from-pink-900 to-rose-800 flex items-center justify-center">
+                            <i class="fas fa-heart text-6xl text-pink-300"></i>
+                        </div>
+                        <div class="absolute top-4 right-4 bg-black/70 backdrop-blur-sm rounded-full px-3 py-1 text-sm">
+                            <i class="fas fa-fire text-orange-400 mr-1"></i>Hot
+                        </div>
+                    </div>
+                    <h3 class="text-2xl font-semibold mb-3 gradient-text">Rose Gold Cappuccino</h3>
+                    <p class="text-gray-400 mb-4 text-sm leading-relaxed">Smooth cappuccino infused with rose essence and 24k gold flakes. A romantic twist on the classic Italian favorite.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-3xl font-bold gradient-text">₹520</span>
+                        <div class="flex space-x-2">
+                            <span class="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center text-xs font-semibold">P</span>
+                            <span class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-xs font-semibold">D</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-card glass-morphism rounded-2xl p-6 border border-gray-800/50" data-category="coffee">
+                    <div class="relative overflow-hidden rounded-xl mb-6">
+                        <div class="w-full h-48 bg-gradient-to-br from-indigo-900 to-purple-900 flex items-center justify-center">
+                            <i class="fas fa-bolt text-6xl text-indigo-300"></i>
+                        </div>
+                        <div class="absolute top-4 right-4 bg-black/70 backdrop-blur-sm rounded-full px-3 py-1 text-sm">
+                            <i class="fas fa-bolt text-yellow-400 mr-1"></i>Energy
+                        </div>
+                    </div>
+                    <h3 class="text-2xl font-semibold mb-3 gradient-text">Thunder Americano</h3>
+                    <p class="text-gray-400 mb-4 text-sm leading-relaxed">Double shot americano with lightning-fast extraction and electric blue natural coloring. For the ultimate energy boost.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-3xl font-bold gradient-text">₹310</span>
+                        <div class="flex space-x-2">
+                            <span class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-xs font-semibold">V</span>
+                            <span class="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center text-xs font-semibold">GF</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-card glass-morphism rounded-2xl p-6 border border-gray-800/50" data-category="coffee">
+                    <div class="relative overflow-hidden rounded-xl mb-6">
+                        <div class="w-full h-48 bg-gradient-to-br from-orange-900 to-red-900 flex items-center justify-center">
+                            <i class="fas fa-sun text-6xl text-orange-300"></i>
+                        </div>
+                        <div class="absolute top-4 right-4 bg-black/70 backdrop-blur-sm rounded-full px-3 py-1 text-sm">
+                            <i class="fas fa-thermometer-half text-cyan-400 mr-1"></i>Iced
+                        </div>
+                    </div>
+                    <h3 class="text-2xl font-semibold mb-3 gradient-text">Solar Flare Frappe</h3>
+                    <p class="text-gray-400 mb-4 text-sm leading-relaxed">Iced coffee frappe with caramel swirls and molecular orange essence. Topped with whipped cream clouds.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-3xl font-bold gradient-text">₹470</span>
+                        <div class="flex space-x-2">
+                            <span class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-xs font-semibold">D</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Tea Items -->
+                <div class="menu-card glass-morphism rounded-2xl p-6 border border-gray-800/50 hidden" data-category="tea">
+                    <div class="relative overflow-hidden rounded-xl mb-6">
+                        <div class="w-full h-48 bg-gradient-to-br from-green-800 to-emerald-900 flex items-center justify-center">
+                            <i class="fas fa-spa text-6xl text-green-300"></i>
+                        </div>
+                        <div class="absolute top-4 right-4 bg-black/70 backdrop-blur-sm rounded-full px-3 py-1 text-sm">
+                            <i class="fas fa-leaf text-green-400 mr-1"></i>Organic
+                        </div>
+                    </div>
+                    <h3 class="text-2xl font-semibold mb-3 gradient-text">Cosmic Matcha</h3>
+                    <p class="text-gray-400 mb-4 text-sm leading-relaxed">Premium ceremonial grade matcha from Uji, Japan, whisked with precision and served with house-made oat milk.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-3xl font-bold gradient-text">₹440</span>
+                        <div class="flex space-x-2">
+                            <span class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-xs font-semibold">V</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="menu-card glass-morphism rounded-2xl p-6 border border-gray-800/50 hidden" data-category="tea">
+                    <div class="relative overflow-hidden rounded-xl mb-6">
+                        <div class="w-full h-48 bg-gradient-to-br from-red-800 to-pink-900 flex items-center justify-center">
+                            <i class="fas fa-fire text-6xl text-red-300"></i>
+                        </div>
+                        <div class="absolute top-4 right-4 bg-black/70 backdrop-blur-sm rounded-full px-3 py-1 text-sm">
+                            <i class="fas fa-fire text-orange-400 mr-1"></i>Hot
+                        </div>
+                    </div>
+                    <h3 class="text-2xl font-semibold mb-3 gradient-text">Dragon Well Fusion</h3>
+                    <p class="text-gray-400 mb-4 text-sm leading-relaxed">Traditional Chinese green tea enhanced with molecular gastronomy techniques and subtle fruit infusions.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-3xl font-bold gradient-text">₹340</span>
+                        <div class="flex space-x-2">
+                            <span class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-xs font-semibold">V</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-card glass-morphism rounded-2xl p-6 border border-gray-800/50 hidden" data-category="tea">
+                    <div class="relative overflow-hidden rounded-xl mb-6">
+                        <div class="w-full h-48 bg-gradient-to-br from-purple-800 to-indigo-900 flex items-center justify-center">
+                            <i class="fas fa-moon text-6xl text-purple-300"></i>
+                        </div>
+                        <div class="absolute top-4 right-4 bg-black/70 backdrop-blur-sm rounded-full px-3 py-1 text-sm">
+                            <i class="fas fa-leaf text-purple-400 mr-1"></i>Herbal
+                        </div>
+                    </div>
+                    <h3 class="text-2xl font-semibold mb-3 gradient-text">Lunar Eclipse Chai</h3>
+                    <p class="text-gray-400 mb-4 text-sm leading-relaxed">Mystical blend of black tea, exotic spices, and lavender. Served with steamed almond milk and edible glitter.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-3xl font-bold gradient-text">₹390</span>
+                        <div class="flex space-x-2">
+                            <span class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-xs font-semibold">V</span>
+                            <span class="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center text-xs font-semibold">GF</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-card glass-morphism rounded-2xl p-6 border border-gray-800/50 hidden" data-category="tea">
+                    <div class="relative overflow-hidden rounded-xl mb-6">
+                        <div class="w-full h-48 bg-gradient-to-br from-teal-800 to-cyan-900 flex items-center justify-center">
+                            <i class="fas fa-snowflake text-6xl text-cyan-300"></i>
+                        </div>
+                        <div class="absolute top-4 right-4 bg-black/70 backdrop-blur-sm rounded-full px-3 py-1 text-sm">
+                            <i class="fas fa-thermometer-half text-cyan-400 mr-1"></i>Iced
+                        </div>
+                    </div>
+                    <h3 class="text-2xl font-semibold mb-3 gradient-text">Arctic Mint Green Tea</h3>
+                    <p class="text-gray-400 mb-4 text-sm leading-relaxed">Refreshing iced green tea infused with fresh mint and cucumber. Molecular ice cubes for extended cooling.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-3xl font-bold gradient-text">₹320</span>
+                        <div class="flex space-x-2">
+                            <span class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-xs font-semibold">V</span>
+                            <span class="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center text-xs font-semibold">GF</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-card glass-morphism rounded-2xl p-6 border border-gray-800/50 hidden" data-category="tea">
+                    <div class="relative overflow-hidden rounded-xl mb-6">
+                        <div class="w-full h-48 bg-gradient-to-br from-yellow-800 to-orange-900 flex items-center justify-center">
+                            <i class="fas fa-crown text-6xl text-yellow-300"></i>
+                        </div>
+                        <div class="absolute top-4 right-4 bg-black/70 backdrop-blur-sm rounded-full px-3 py-1 text-sm">
+                            <i class="fas fa-award text-yellow-400 mr-1"></i>Premium
+                        </div>
+                    </div>
+                    <h3 class="text-2xl font-semibold mb-3 gradient-text">Golden Oolong Supreme</h3>
+                    <p class="text-gray-400 mb-4 text-sm leading-relaxed">Rare high-mountain oolong with complex floral notes and honey finish. Served in traditional gongfu style.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-3xl font-bold gradient-text">₹580</span>
+                        <div class="flex space-x-2">
+                            <span class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-xs font-semibold">V</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Snacks Items -->
+                <div class="menu-card glass-morphism rounded-2xl p-6 border border-gray-800/50 hidden" data-category="snacks">
+                    <div class="relative overflow-hidden rounded-xl mb-6">
+                        <div class="w-full h-48 bg-gradient-to-br from-yellow-800 to-amber-900 flex items-center justify-center">
+                            <i class="fas fa-bread-slice text-6xl text-yellow-300"></i>
+                        </div>
+                        <div class="absolute top-4 right-4 bg-black/70 backdrop-blur-sm rounded-full px-3 py-1 text-sm">
+                            <i class="fas fa-leaf text-green-400 mr-1"></i>Fresh
+                        </div>
+                    </div>
+                    <h3 class="text-2xl font-semibold mb-3 gradient-text">Quantum Toast</h3>
+                    <p class="text-gray-400 mb-4 text-sm leading-relaxed">Thick-cut sourdough topped with smashed avocado, cherry tomatoes, and chili flakes.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-3xl font-bold gradient-text">₹700</span>
+                        <div class="flex space-x-2">
+                            <span class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-xs font-semibold">V</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-card glass-morphism rounded-2xl p-6 border border-gray-800/50 hidden" data-category="snacks">
+                    <div class="relative overflow-hidden rounded-xl mb-6">
+                        <div class="w-full h-48 bg-gradient-to-br from-orange-800 to-red-800 flex items-center justify-center">
+                            <i class="fas fa-cookie-bite text-6xl text-orange-300"></i>
+                        </div>
+                        <div class="absolute top-4 right-4 bg-black/70 backdrop-blur-sm rounded-full px-3 py-1 text-sm">
+                            <i class="fas fa-leaf text-green-400 mr-1"></i>Fresh
+                        </div>
+                    </div>
+                    <h3 class="text-2xl font-semibold mb-3 gradient-text">Oatmeal Raisin</h3>
+                    <p class="text-gray-400 mb-4 text-sm leading-relaxed">Chewy oatmeal cookies loaded with raisins, warm spices, and a hint of vanilla.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-3xl font-bold gradient-text">₹850</span>
+                        <div class="flex space-x-2">
+                            <span class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-xs font-semibold">V</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-card glass-morphism rounded-2xl p-6 border border-gray-800/50 hidden" data-category="snacks">
+                    <div class="relative overflow-hidden rounded-xl mb-6">
+                        <div class="w-full h-48 bg-gradient-to-br from-yellow-800 to-amber-900 flex items-center justify-center">
+                            <i class="fas fa-cookie-bite text-6xl text-yellow-300"></i>
+                        </div>
+                        <div class="absolute top-4 right-4 bg-black/70 backdrop-blur-sm rounded-full px-3 py-1 text-sm">
+                            <i class="fas fa-leaf text-green-400 mr-1"></i>Fresh
+                        </div>
+                    </div>
+                    <h3 class="text-2xl font-semibold mb-3 gradient-text">Croissant</h3>
+                    <p class="text-gray-400 mb-4 text-sm leading-relaxed">Buttery, flaky French croissant baked fresh daily with delicate layers.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-3xl font-bold gradient-text">₹690</span>
+                        <div class="flex space-x-2">
+                            <span class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-xs font-semibold">GF</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-card glass-morphism rounded-2xl p-6 border border-gray-800/50 hidden" data-category="snacks">
+                    <div class="relative overflow-hidden rounded-xl mb-6">
+                        <div class="w-full h-48 bg-gradient-to-br from-orange-800 to-red-800 flex items-center justify-center">
+                            <i class="fas fa-burger text-6xl text-orange-300"></i>
+                        </div>
+                        <div class="absolute top-4 right-4 bg-black/70 backdrop-blur-sm rounded-full px-3 py-1 text-sm">
+                            <i class="fas fa-leaf text-green-400 mr-1"></i>Fresh
+                        </div>
+                    </div>
+                    <h3 class="text-2xl font-semibold mb-3 gradient-text">Quick Bite</h3>
+                    <p class="text-gray-400 mb-4 text-sm leading-relaxed">Toasted multigrain sandwich with crisp veggies, herbed mayo, and cheddar.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-3xl font-bold gradient-text">₹400</span>
+                        <div class="flex space-x-2">
+                            <span class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-xs font-semibold">V</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Desserts Items -->
+                <div class="menu-card glass-morphism rounded-2xl p-6 border border-gray-800/50 hidden" data-category="desserts">
+                    <div class="relative overflow-hidden rounded-xl mb-6">
+                        <div class="w-full h-48 bg-gradient-to-br from-yellow-900 to-pink-900 flex items-center justify-center">
+                            <i class="fas fa-ice-cream text-6xl text-pink-200"></i>
+                        </div>
+                        <div class="absolute top-4 right-4 bg-black/70 backdrop-blur-sm rounded-full px-3 py-1 text-sm">
+                            <i class="fas fa-star text-yellow-400 mr-1"></i>Signature
+                        </div>
+                    </div>
+                    <h3 class="text-2xl font-semibold mb-3 gradient-text">Stellar Tiramisu</h3>
+                    <p class="text-gray-400 mb-4 text-sm leading-relaxed">Classic Italian tiramisu with a cosmic twist: espresso-soaked ladyfingers, mascarpone, and edible gold dust.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-3xl font-bold gradient-text">₹520</span>
+                        <div class="flex space-x-2">
+                            <span class="w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center text-xs font-semibold">V</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-card glass-morphism rounded-2xl p-6 border border-gray-800/50 hidden" data-category="desserts">
+                    <div class="relative overflow-hidden rounded-xl mb-6">
+                        <div class="w-full h-48 bg-gradient-to-br from-purple-900 to-indigo-900 flex items-center justify-center">
+                            <i class="fas fa-birthday-cake text-6xl text-purple-200"></i>
+                        </div>
+                        <div class="absolute top-4 right-4 bg-black/70 backdrop-blur-sm rounded-full px-3 py-1 text-sm">
+                            <i class="fas fa-magic text-pink-400 mr-1"></i>Magical
+                        </div>
+                    </div>
+                    <h3 class="text-2xl font-semibold mb-3 gradient-text">Nebula Cheesecake</h3>
+                    <p class="text-gray-400 mb-4 text-sm leading-relaxed">Creamy cheesecake with a swirl of blueberry and raspberry nebula, topped with shimmering galaxy glaze.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-3xl font-bold gradient-text">₹500</span>
+                        <div class="flex space-x-2">
+                            <span class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-xs font-semibold">GF</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-card glass-morphism rounded-2xl p-6 border border-gray-800/50 hidden" data-category="desserts">
+                    <div class="relative overflow-hidden rounded-xl mb-6">
+                        <div class="w-full h-48 bg-gradient-to-br from-orange-900 to-yellow-800 flex items-center justify-center">
+                            <i class="fas fa-cookie-bite text-6xl text-yellow-200"></i>
+                        </div>
+                        <div class="absolute top-4 right-4 bg-black/70 backdrop-blur-sm rounded-full px-3 py-1 text-sm">
+                            <i class="fas fa-cookie text-orange-400 mr-1"></i>Fresh
+                        </div>
+                    </div>
+                    <h3 class="text-2xl font-semibold mb-3 gradient-text">Solar Flare Macarons</h3>
+                    <p class="text-gray-400 mb-4 text-sm leading-relaxed">Assorted macarons with solar-inspired flavors: passionfruit, mango, and blood orange. Dusted with edible glitter.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-3xl font-bold gradient-text">₹380</span>
+                        <div class="flex space-x-2">
+                            <span class="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center text-xs font-semibold">V</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Divider -->
+    <div class="section-divider"></div>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 relative spotlight">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div class="about-content">
+                    <h2 class="text-5xl md:text-6xl font-bold mb-8 gradient-text">About Nexus Café</h2>
+                    <p class="text-gray-300 text-xl mb-8 leading-relaxed">
+                        Where innovation meets tradition. Our café represents the perfect fusion of cutting-edge technology and time-honored coffee craftsmanship, creating an experience that transcends the ordinary.
+                    </p>
+                    <p class="text-gray-400 mb-10 text-lg leading-relaxed">
+                        Founded by a team of coffee connoisseurs and tech visionaries, we're pioneering the future of café culture while honoring the artisanal traditions that make great coffee possible.
+                    </p>
+                    
+                    <!-- Stats -->
+                    <div class="grid grid-cols-2 gap-6 mb-12">
+                        <div class="text-center">
+                            <div class="text-4xl font-bold gradient-text mb-2" id="coffee-counter">0</div>
+                            <p class="text-gray-400">Cups Served Daily</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-4xl font-bold gradient-text mb-2">15+</div>
+                            <p class="text-gray-400">Countries Sourced</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Opening Hours -->
+                    <div class="glass-morphism rounded-2xl p-8 border border-gray-800/50">
+                        <h3 class="text-2xl font-semibold mb-6 flex items-center gradient-text">
+                            <span class="w-4 h-4 bg-green-500 rounded-full mr-4 animate-pulse"></span>
+                            Opening Hours
+                        </h3>
+                        <div class="space-y-4 text-gray-300 text-lg">
+                            <div class="flex justify-between items-center">
+                                <span>Monday - Friday</span>
+                                <span class="font-semibold">6:00 AM - 10:00 PM</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span>Saturday - Sunday</span>
+                                <span class="font-semibold">7:00 AM - 11:00 PM</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span>Holidays</span>
+                                <span class="font-semibold">8:00 AM - 6:00 PM</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="space-y-8">
+                    <!-- Location Card -->
+                    <div class="glass-morphism rounded-2xl p-8 border border-gray-800/50 text-center">
+                        <div class="w-20 h-20 bg-gradient-to-br from-purple-500 to-blue-500 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                            <i class="fas fa-map-marked-alt text-3xl text-white"></i>
+                        </div>
+                        <h3 class="text-2xl font-semibold mb-4 gradient-text">Visit Our Flagship</h3>
+                        <p class="text-gray-400 mb-6">Experience the future of coffee in our state-of-the-art facility</p>
+                        <div class="space-y-4 text-left">
+                            <div class="flex items-center space-x-4">
+                                <i class="fas fa-phone text-blue-400 text-xl w-6"></i>
+                                <span class="text-gray-300">+91 77X80 56X08-NEXUS</span>
+                            </div>
+                            <div class="flex items-center space-x-4">
+                                <i class="fas fa-envelope text-cyan-400 text-xl w-6"></i>
+                                <span class="text-gray-300">IleshDevX@nexuscafe.com</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Awards Card -->
+                    <div class="glass-morphism rounded-2xl p-8 border border-gray-800/50">
+                        <h3 class="text-2xl font-semibold mb-6 gradient-text text-center">Recognition</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center space-x-4">
+                                <div class="w-12 h-12 bg-yellow-500 rounded-xl flex items-center justify-center">
+                                    <i class="fas fa-trophy text-white"></i>
+                                </div>
+                                <div>
+                                    <p class="font-semibold">Best Innovation 2024</p>
+                                    <p class="text-gray-400 text-sm">Coffee Industry Awards</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-4">
+                                <div class="w-12 h-12 bg-green-500 rounded-xl flex items-center justify-center">
+                                    <i class="fas fa-leaf text-white"></i>
+                                </div>
+                                <div>
+                                    <p class="font-semibold">Sustainability Leader</p>
+                                    <p class="text-gray-400 text-sm">Green Business Council</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-4">
+                                <div class="w-12 h-12 bg-purple-500 rounded-xl flex items-center justify-center">
+                                    <i class="fas fa-users text-white"></i>
+                                </div>
+                                <div>
+                                    <p class="font-semibold">Community Choice</p>
+                                    <p class="text-gray-400 text-sm">Local Business Awards</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Specialties Section -->
+    <section id="specialties" class="py-20 relative spotlight">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-5xl md:text-6xl font-bold mb-6 gradient-text">House Specialties</h2>
+                <p class="text-gray-400 text-xl max-w-3xl mx-auto">Exclusive creations that showcase our innovative approach to coffee culture</p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="space-y-8">
+                    <div class="glass-morphism rounded-2xl p-8 border border-gray-800/50 hover:border-purple-500/50 transition-all group">
+                        <div class="flex items-start space-x-6">
+                            <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                                <i class="fas fa-atom text-2xl text-white"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="text-2xl font-semibold mb-3 gradient-text">Molecular Coffee</h3>
+                                <p class="text-gray-400 mb-4">Experience coffee in its most innovative form. Our molecular gastronomy techniques transform familiar flavors into extraordinary textures and presentations.</p>
+                                <div class="flex space-x-4">
+                                    <span class="px-3 py-1 bg-purple-500/20 rounded-full text-sm">Nitrogen Infused</span>
+                                    <span class="px-3 py-1 bg-pink-500/20 rounded-full text-sm">Spherification</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="glass-morphism rounded-2xl p-8 border border-gray-800/50 hover:border-blue-500/50 transition-all group">
+                        <div class="flex items-start space-x-6">
+                            <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                                <i class="fas fa-microchip text-2xl text-white"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="text-2xl font-semibold mb-3 gradient-text">Kitchen robot Experience</h3>
+                                <p class="text-gray-400 mb-4">Robotic precision meets artisanal coffee. Our barista flawlessly extracts rich notes from single-origin beans for a consistently perfect cup. </p>
+                                <div class="flex space-x-4">
+                                    <span class="px-3 py-1 bg-blue-500/20 rounded-full text-sm">Personalized</span>
+                                    <span class="px-3 py-1 bg-cyan-500/20 rounded-full text-sm">Adaptive</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="glass-morphism rounded-2xl p-8 border border-gray-800/50 hover:border-green-500/50 transition-all group">
+                        <div class="flex items-start space-x-6">
+                            <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                                <i class="fas fa-globe text-2xl text-white"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="text-2xl font-semibold mb-3 gradient-text">Virtual Café Tours</h3>
+                                <p class="text-gray-400 mb-4">Take immersive virtual tours of our partner coffee farms while enjoying their beans. Connect with the source of your coffee.</p>
+                                <div class="flex space-x-4">
+                                    <span class="px-3 py-1 bg-green-500/20 rounded-full text-sm">VR Ready</span>
+                                    <span class="px-3 py-1 bg-emerald-500/20 rounded-full text-sm">Educational</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="relative">
+                    <div class="glass-morphism rounded-3xl p-12 border border-gray-800/50 text-center">
+                        <div class="w-32 h-32 bg-gradient-to-br from-purple-500 via-blue-500 to-cyan-500 rounded-full mx-auto mb-8 flex items-center justify-center animate-pulse">
+                            <i class="fas fa-rocket text-5xl text-white"></i>
+                        </div>
+                        <h3 class="text-3xl font-bold mb-4 gradient-text">The Future is Here</h3>
+                        <p class="text-gray-400 text-lg mb-8">Step into the future of coffee, where pioneering technology meets artisanal craft. Our robotic barista ensures flawless extraction from specialty beans, unlocking their truest flavour. Immerse your senses in our modern, futuristic environment and experience a cup of coffee that is simply unforgettable.</p>
+                        <button class="gradient-border">
+                            <div class="bg-black px-8 py-4 rounded-xl hover:bg-gray-900 transition-all">
+                                <span class="gradient-text font-semibold">Let's Experience That!</span>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-20 border-t border-gray-800/50 relative">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <div class="md:col-span-2">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-blue-500 rounded-2xl flex items-center justify-center">
+                            <i class="fas fa-coffee text-white text-xl"></i>
+                        </div>
+                        <span class="text-3xl font-bold gradient-text">Nexus Café</span>
+                    </div>
+                    <p class="text-gray-400 text-lg mb-6 max-w-md">Pioneering the future of coffee culture through innovation, sustainability, and uncompromising quality.</p>
+                    <div class="flex space-x-4">
+                        <a href="https://www.instagram.com/ilesh.009" class="w-12 h-12 glass-morphism rounded-xl flex items-center justify-center hover:bg-purple-600/20 transition-all group">
+                            <i class="fab fa-instagram group-hover:scale-110 transition-transform"></i>
+                        </a>
+                        <a href="https://x.com/Ilesh_009" class="w-12 h-12 glass-morphism rounded-xl flex items-center justify-center hover:bg-blue-600/20 transition-all group">
+                            <i class="fab fa-twitter group-hover:scale-110 transition-transform"></i>
+                        </a>
+                        <a href="https://github.com/IleshDevX" class="w-12 h-12 glass-morphism rounded-xl flex items-center justify-center hover:bg-blue-800/20 transition-all group">
+                            <i class="fab fa-github group-hover:scale-110 transition-transform"></i>
+                        </a>
+                        <a href="https://www.youtube.com/@ileshpatel666" class="w-12 h-12 glass-morphism rounded-xl flex items-center justify-center hover:bg-red-600/20 transition-all group">
+                            <i class="fab fa-youtube group-hover:scale-110 transition-transform"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-6 text-xl gradient-text">Quick Links</h4>
+                    <ul class="space-y-3 text-gray-400">
+                        <li><a href="#home" class="hover:text-purple-400 transition-colors flex items-center group">
+                            <i class="fas fa-home mr-3 group-hover:text-purple-400"></i>Home
+                        </a></li>
+                        <li><a href="#menu" class="hover:text-blue-400 transition-colors flex items-center group">
+                            <i class="fas fa-utensils mr-3 group-hover:text-blue-400"></i>Menu
+                        </a></li>
+                        <li><a href="#about" class="hover:text-cyan-400 transition-colors flex items-center group">
+                            <i class="fas fa-info-circle mr-3 group-hover:text-cyan-400"></i>About
+                        </a></li>
+                        <li><a href="#specialties" class="hover:text-pink-400 transition-colors flex items-center group">
+                            <i class="fas fa-star mr-3 group-hover:text-pink-400"></i>Specialties
+                        </a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-6 text-xl gradient-text">Support</h4>
+                    <ul class="space-y-3 text-gray-400">
+                        <li><a href="#" class="hover:text-purple-400 transition-colors flex items-center group">
+                            <i class="fas fa-envelope mr-3 group-hover:text-purple-400"></i>Contact Us
+                        </a></li>
+                        <li><a href="#" class="hover:text-purple-400 transition-colors flex items-center group">
+                            <i class="fas fa-question-circle mr-3 group-hover:text-purple-400"></i>FAQ
+                        </a></li>
+                        <li><a href="#" class="hover:text-purple-400 transition-colors flex items-center group">
+                            <i class="fas fa-shield-alt mr-3 group-hover:text-purple-400"></i>Privacy Policy
+                        </a></li>
+                        <li><a href="#" class="hover:text-purple-400 transition-colors flex items-center group">
+                            <i class="fas fa-file-contract mr-3 group-hover:text-purple-400"></i>Terms of Service
+                        </a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="section-divider mb-8"></div>
+            
+            <div class="flex flex-col md:flex-row justify-between items-center text-gray-400">
+                <p>&copy; 2025 Nexus Café By IleshDevX All Rights Reserved. Crafted with ❤️ and Vanilla JavaScript ☕</p>
+                <div class="flex space-x-6 mt-4 md:mt-0">
+                    <span class="flex items-center">
+                        <i class="fas fa-leaf text-green-400 mr-2"></i>Carbon Neutral
+                    </span>
+                    <span class="flex items-center">
+                        <i class="fas fa-award text-yellow-400 mr-2"></i>Award Winning
+                    </span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // GSAP Registration
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Initialize animations after page load
+        window.addEventListener('load', function() {
+            // Hide loader with enhanced animation
+            gsap.to("#loader", {
+                opacity: 0,
+                scale: 0.8,
+                duration: 0.5,
+                ease: "power2.inOut",
+                onComplete: () => {
+                    document.getElementById('loader').style.display = 'none';
+                }
+            });
+
+            // Enhanced hero animations
+            gsap.timeline()
+                .fromTo(".hero-content", 
+                    { opacity: 0, y: 50, filter: "blur(10px)" },
+                    { opacity: 1, y: 0, filter: "blur(0px)", duration: 1, ease: "power3.out" }
+                )
+                .fromTo(".hero-content h1", 
+                    { scale: 0.9 },
+                    { scale: 1, duration: 0.8, ease: "back.out(1.7)" }, "-=0.8"
+                );
+
+            // Scroll-triggered animations for initially visible items
+            document.querySelectorAll('.menu-card[data-category="coffee"]').forEach((card, index) => {
+                gsap.fromTo(card,
+                    { opacity: 0, y: 60, rotationX: 30 },
+                    {
+                        opacity: 1,
+                        y: 0,
+                        rotationX: 0,
+                        duration: 0.6,
+                        delay: index * 0.1,
+                        ease: "power3.out",
+                        scrollTrigger: {
+                            trigger: card,
+                            start: "top 85%",
+                            end: "bottom 15%",
+                            toggleActions: "play none none reverse"
+                        }
+                    }
+                );
+            });
+
+            // Feature cards animation
+            gsap.utils.toArray('.feature-card').forEach((card, index) => {
+                gsap.fromTo(card,
+                    { opacity: 0, y: 40, scale: 0.95 },
+                    {
+                        opacity: 1,
+                        y: 0,
+                        scale: 1,
+                        duration: 0.5,
+                        delay: index * 0.1,
+                        ease: "back.out(1.7)",
+                        scrollTrigger: {
+                            trigger: card,
+                            start: "top 80%"
+                        }
+                    }
+                );
+            });
+
+            // About section animations
+            gsap.fromTo(".about-content",
+                { opacity: 0, x: -80 },
+                {
+                    opacity: 1,
+                    x: 0,
+                    duration: 0.8,
+                    ease: "power3.out",
+                    scrollTrigger: {
+                        trigger: ".about-content",
+                        start: "top 70%"
+                    }
+                }
+            );
+
+            // Counter animation
+            gsap.to("#coffee-counter", {
+                textContent: 850,
+                duration: 2,
+                ease: "power2.out",
+                snap: { textContent: 1 },
+                scrollTrigger: {
+                    trigger: "#coffee-counter",
+                    start: "top 80%"
+                }
+            });
+
+            // Specialty cards stagger animation
+            gsap.utils.toArray('#specialties .glass-morphism').forEach((card, index) => {
+                gsap.fromTo(card,
+                    { opacity: 0, x: index % 2 === 0 ? -40 : 40 },
+                    {
+                        opacity: 1,
+                        x: 0,
+                        duration: 0.6,
+                        delay: index * 0.1,
+                        ease: "power3.out",
+                        scrollTrigger: {
+                            trigger: card,
+                            start: "top 80%"
+                        }
+                    }
+                );
+            });
+        });
+
+        // Mobile nav toggle
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (mobileBtn && mobileMenu) {
+            mobileBtn.addEventListener('click', () => {
+                const isOpen = !mobileMenu.classList.contains('hidden');
+                if (isOpen) {
+                    mobileMenu.classList.add('hidden');
+                    mobileBtn.setAttribute('aria-expanded', 'false');
+                } else {
+                    mobileMenu.classList.remove('hidden');
+                    mobileBtn.setAttribute('aria-expanded', 'true');
+                }
+            });
+            // Close on link click
+            mobileMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                    mobileBtn.setAttribute('aria-expanded', 'false');
+                });
+            });
+        }
+
+        // **FIXED & FASTER** Enhanced menu category switching
+        document.querySelectorAll('.category-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                const category = tab.dataset.category;
+                
+                document.querySelectorAll('.category-tab').forEach(t => {
+                    t.classList.remove('active', 'bg-gradient-to-r', 'from-purple-600', 'to-blue-600', 'text-white');
+                    t.classList.add('hover:bg-gray-800/50');
+                });
+                tab.classList.add('active', 'bg-gradient-to-r', 'from-purple-600', 'to-blue-600', 'text-white');
+                tab.classList.remove('hover:bg-gray-800/50');
+                
+                let visibleItemIndex = 0;
+                
+                const hasGsap = typeof window.gsap !== 'undefined';
+                document.querySelectorAll('.menu-card').forEach(card => {
+                    const isTargetCategory = card.dataset.category === category;
+
+                    if (isTargetCategory) {
+                        card.classList.remove('hidden');
+
+                        if (hasGsap) {
+                        gsap.fromTo(card, 
+                                { opacity: 0, scale: 0.95, y: 15 },
+                            { 
+                                opacity: 1, 
+                                scale: 1, 
+                                y: 0,
+                                    duration: 0.3,
+                                    delay: visibleItemIndex * 0.08,
+                                    ease: 'power2.out'
+                                }
+                            );
+                            visibleItemIndex++;
+                    } else {
+                            card.style.opacity = '1';
+                            card.style.transform = 'none';
+                        }
+                    } else {
+                        if (hasGsap) {
+                        gsap.to(card, {
+                            opacity: 0,
+                                scale: 0.95,
+                                duration: 0.2,
+                            onComplete: () => card.classList.add('hidden')
+                        });
+                        } else {
+                            card.classList.add('hidden');
+                            card.style.opacity = '';
+                            card.style.transform = '';
+                        }
+                    }
+                });
+            });
+        });
+
+        // Smooth scrolling for navigation with offset for fixed header
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const headerOffset = 100;
+                    const elementPosition = target.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Interactive elements hover effects
+        document.querySelectorAll('.glass-morphism').forEach(element => {
+            element.addEventListener('mouseenter', () => {
+                gsap.to(element, {
+                    scale: 1.02,
+                    duration: 0.2,
+                    ease: "power2.out"
+                });
+            });
+            
+            element.addEventListener('mouseleave', () => {
+                gsap.to(element, {
+                    scale: 1,
+                    duration: 0.2,
+                    ease: "power2.out"
+                });
+            });
+        });
+
+        // Add scroll indicator
+        const scrollIndicator = document.createElement('div');
+        scrollIndicator.innerHTML = '<i class="fas fa-chevron-down"></i>';
+        scrollIndicator.className = 'fixed bottom-8 left-1/2 transform -translate-x-1/2 text-2xl text-purple-400 animate-bounce cursor-pointer z-30';
+        document.body.appendChild(scrollIndicator);
+        
+        scrollIndicator.addEventListener('click', () => {
+            document.querySelector('#menu').scrollIntoView({ behavior: 'smooth' });
+        });
+        
+        // Hide scroll indicator after scrolling
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                gsap.to(scrollIndicator, { opacity: 0, duration: 0.3 });
+            } else {
+                gsap.to(scrollIndicator, { opacity: 1, duration: 0.3 });
+            }
+        });
+        
+    </script>
+</body>
+</html>
+
+    
