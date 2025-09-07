@@ -70,7 +70,7 @@ No installation or build process required. All dependencies are loaded via CDNs.
 nexus-cafe/
 ├── index.html          # Main HTML file
 ├── README.md          # Project documentation
-└── assets/            # Images and additional resources (if any)
+└── screenshots/            # Images and additional resources (if any)
 ```
 
 ## 📸 Screenshots
@@ -154,4 +154,5 @@ While this is primarily a showcase project, contributions are welcome:
 ---
 
 **Note**: This is a conceptual project created for demonstration purposes. Nexus Café is not a real establishment.
+
 
